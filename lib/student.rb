@@ -62,7 +62,7 @@ class Student
       WHERE name = ?
     SQL
 
-    found = Student.create(DB[:conn].execute(sql, name))
+    found = Student.new_from_db(DB[:conn].execute(sql, name))
     return found
   end
 
