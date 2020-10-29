@@ -5,7 +5,7 @@ class Student
   attr_accessor :name, :grade, :id
 
 
-  def initialize(name, grade, id = nil)
+  def initialize(id = nil, name, grade)
     @name = name
     @grade = grade
     @id = id
@@ -52,7 +52,7 @@ class Student
 
   def self.new_from_db(arr_db_row)
     # [id, name, grade]
-    Student.new(arr_db_row[1], arr_db_row[2], arr_db_row[0])
+    Student.new(arr_db_row[0], arr_db_row[1], arr_db_row[2])
   end
 
   def self.find_by_name(name)
@@ -62,7 +62,7 @@ class Student
       WHERE name = ?
     SQL
 
-    found = Student.new_from_db(DB[:conn].execute(sql, name))
+    found = Student.new_from_db(DB[:conn].execute(sql, name)[0])
     return found
   end
 
